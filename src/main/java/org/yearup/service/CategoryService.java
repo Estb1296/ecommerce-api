@@ -18,7 +18,7 @@ public class CategoryService
 
     public List<Category> getAllCategories()
     {
-        
+
         categoryRepository.findAll();
         // get all categories
         return null;
