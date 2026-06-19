@@ -5,6 +5,7 @@ import org.yearup.models.Category;
 import org.yearup.repository.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService
@@ -18,16 +19,23 @@ public class CategoryService
 
     public List<Category> getAllCategories()
     {
-        
-        categoryRepository.findAll();
+
+        return categoryRepository.findAll();
         // get all categories
-        return null;
     }
 
-    public Category getById(int categoryId)
+    public Optional<Category> getById(int categoryId)
     {
         // get category by id
-        return null;
+//        if (categoryId <= 0) {
+//            throw new InvalidInputException("Category ID must be a positive number"); input validation for later
+//        }
+        Optional<Category> category = categoryRepository.findById(categoryId);
+//         Instead of optional I'll be returning an object later
+//        return categoryRepository.findById(categoryId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
+
+        return category;
     }
 
     public Category create(Category category)
