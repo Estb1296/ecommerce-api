@@ -41,12 +41,11 @@ public class CategoryService
 
     }
 
-    public Category create(Category category,String categoryName)
+    public Category create(Category category)
     {
         if (category.getName() == null || category.getName().isBlank()) {
             throw new InvalidInputException("Category name cannot be empty");
         }
-
 
         //Checking through the list of names that may be a match
         if (categoryRepository.existsByCategoryNameIgnoreCase(category.getName())) {
