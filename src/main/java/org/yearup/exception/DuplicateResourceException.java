@@ -6,6 +6,7 @@ package org.yearup.exception;
  */
 
 public class DuplicateResourceException extends ApplicationException{
+
     public DuplicateResourceException(String message) {
         super(message);
     }
@@ -13,4 +14,5 @@ public class DuplicateResourceException extends ApplicationException{
     public DuplicateResourceException(String message, Throwable cause) {
         super(message, cause);
     }
+
 }
