@@ -1,7 +1,10 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
+import org.yearup.exception.InvalidInputException;
+import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.Product;
+import org.yearup.repository.CategoryRepository;
 import org.yearup.repository.ProductRepository;
 
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.List;
 public class ProductService
 {
     private final ProductRepository productRepository;
+    private  CategoryRepository categoryRepository;
 
     public ProductService(ProductRepository productRepository)
     {
@@ -38,6 +42,34 @@ public class ProductService
     public Product getById(int productId)
     {
         return productRepository.findById(productId).orElse(null);
+    }
+
+    public List<Product> getProductsByCategory(int categoryId) {
+        // Input validation
+
+        if (categoryId <= 0) {
+            throw new InvalidInputException("Category ID must be a positive number");
+        }
+
+        // Verify category exists
+
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new ResourceNotFoundException(
+                    "Category not found with id: " + categoryId
+            );
+        }
+
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+
+        // Optional: handle case where category exists but has no products
+
+        if (products.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No products found for category id: " + categoryId
+            );
+        }
+
+        return products;
     }
 
     public Product create(Product product)
