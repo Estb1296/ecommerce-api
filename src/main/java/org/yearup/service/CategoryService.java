@@ -1,6 +1,8 @@
 package org.yearup.service;
 
+
 import org.springframework.stereotype.Service;
+
 import org.yearup.exception.DataAccessException;
 import org.yearup.exception.DuplicateResourceException;
 import org.yearup.exception.InvalidInputException;
@@ -9,7 +11,7 @@ import org.yearup.models.Category;
 import org.yearup.repository.CategoryRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CategoryService
@@ -39,20 +41,72 @@ public class CategoryService
 
     }
 
-    public Category create(Category category)
+    public Category create(Category category,String categoryName)
     {
-        // create a new category
-      return null;
+        if (category.getName() == null || category.getName().isBlank()) {
+            throw new InvalidInputException("Category name cannot be empty");
+        }
+
+
+        //Checking through the list of names that may be a match
+        if (categoryRepository.existsByCategoryNameIgnoreCase(category.getName())) {
+            throw new DuplicateResourceException(
+                    "Category with name '" + category.getName() + "' already exists"
+            );
+        }
+
+        try {
+
+            return categoryRepository.save(category);
+
+        } catch (Exception e) {
+
+            throw new DataAccessException("Failed to save category", e);
+
+        }
+
     }
 
     public Category update(int categoryId, Category category)
     {
         // update category and return the updated category
-        return null;
+        if (category.getName() == null || category.getName().isBlank()) {
+
+            throw new InvalidInputException("Category name cannot be empty");
+
+        }
+
+        Category existing = getById(categoryId);
+
+        if (!existing.getName().equalsIgnoreCase(category.getName()) &&
+                categoryRepository.existsByCategoryNameIgnoreCase(category.getName())) {
+
+            throw new DuplicateResourceException(
+                    "Category with name '" + category.getName() + "' already exists"
+            );
+
+        }
+
+        existing.setName(category.getName());
+        existing.setDescription(category.getDescription());
+
+        try {
+
+            return categoryRepository.save(existing);
+
+        } catch (Exception e) {
+
+            throw new DataAccessException("Failed to update category", e);
+
+        }
+
     }
 
     public void delete(int categoryId)
     {
         // delete category
+        getById(categoryId);  // Throws ResourceNotFound exception if not found
+        categoryRepository.deleteById(categoryId);
+
     }
 }
