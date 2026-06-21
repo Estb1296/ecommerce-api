@@ -13,11 +13,12 @@ import java.util.List;
 public class ProductService
 {
     private final ProductRepository productRepository;
-    private  CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository)
+    public ProductService(ProductRepository productRepository,CategoryRepository categoryRepository)
     {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory)
@@ -30,7 +31,6 @@ public class ProductService
                        .filter(p -> minPrice == null || p.getPrice() >= minPrice)
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
-                       .filter(Product::isFeatured)
                        .toList();
     }
 
@@ -88,6 +88,7 @@ public class ProductService
         existing.setSubCategory(product.getSubCategory());
         existing.setFeatured(product.isFeatured());
         existing.setImageUrl(product.getImageUrl());
+        existing.setStock(product.getStock());
         return productRepository.save(existing);
     }
 

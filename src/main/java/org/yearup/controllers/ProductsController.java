@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.yearup.exception.InvalidInputException;
+import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.Product;
 import org.yearup.service.ProductService;
 
@@ -29,17 +31,21 @@ public class ProductsController
                                 @RequestParam(name="maxPrice", required = false) Double maxPrice,
                                 @RequestParam(name="subCategory", required = false) String subCategory)
     {
+
         return productService.search(categoryId, minPrice, maxPrice, subCategory);
+
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id)
     {
+        if (id <= 0) {
+            throw new InvalidInputException("Product ID must be a positive number");
+        }
         Product product = productService.getById(id);
 
         if (product == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("Product not found with id: " + id);
 
         return product;
     }
@@ -56,20 +62,18 @@ public class ProductsController
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Product updateProduct(@PathVariable int id, @RequestBody Product product)
     {
-        if (productService.getById(id) == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        return productService.update(id, product);
+        return productService.update(id, product); // Throws exception if not found
+
     }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id)
     {
-        if (productService.getById(id) == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         productService.delete(id);
         return ResponseEntity.noContent().build();
+
     }
 }
