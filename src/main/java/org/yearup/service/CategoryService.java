@@ -1,13 +1,16 @@
 package org.yearup.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.yearup.exception.DataAccessException;
 import org.yearup.exception.DuplicateResourceException;
 import org.yearup.exception.InvalidInputException;
 import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.Category;
+import org.yearup.models.Product;
 import org.yearup.repository.CategoryRepository;
 
 import java.util.List;
@@ -17,10 +20,12 @@ import java.util.List;
 public class CategoryService
 {
     private final CategoryRepository categoryRepository;
+    private final ProductService productService;
 
-    public CategoryService(CategoryRepository categoryRepository)
+    public CategoryService(CategoryRepository categoryRepository,ProductService productService)
     {
         this.categoryRepository = categoryRepository;
+        this.productService = productService;
     }
 
     public List<Category> getAllCategories()
@@ -40,7 +45,7 @@ public class CategoryService
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
 
     }
-
+    @Transactional
     public Category create(Category category)
     {
         if (category.getName() == null || category.getName().isBlank()) {
@@ -48,14 +53,14 @@ public class CategoryService
         }
 
         //Checking through the list of names that may be a match
-        if (categoryRepository.existsByCategoryNameIgnoreCase(category.getName())) {
+        if (categoryRepository.existsByNameIgnoreCase(category.getName())) {
             throw new DuplicateResourceException(
                     "Category with name '" + category.getName() + "' already exists"
             );
         }
 
         try {
-
+            category.setCategoryId(0);
             return categoryRepository.save(category);
 
         } catch (Exception e) {
@@ -78,7 +83,7 @@ public class CategoryService
         Category existing = getById(categoryId);
 
         if (!existing.getName().equalsIgnoreCase(category.getName()) &&
-                categoryRepository.existsByCategoryNameIgnoreCase(category.getName())) {
+                categoryRepository.existsByNameIgnoreCase(category.getName())) {
 
             throw new DuplicateResourceException(
                     "Category with name '" + category.getName() + "' already exists"
@@ -107,5 +112,18 @@ public class CategoryService
         getById(categoryId);  // Throws ResourceNotFound exception if not found
         categoryRepository.deleteById(categoryId);
 
+    }
+    public List<Product> getProductsByCategory(int categoryId) {
+        if (categoryId <= 0) {
+            throw new InvalidInputException("Category ID must be a positive number");
+        }
+
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new ResourceNotFoundException(
+                    "Category not found with id: " + categoryId
+            );
+        }
+
+        return productService.getProductsByCategory(categoryId);
     }
 }

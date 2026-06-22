@@ -2,6 +2,7 @@ package org.yearup.config;
 
 
 
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.yearup.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<ErrorResponse> handleInvalidInput(InvalidInputException ex) {
+        System.err.println("=== UNEXPECTED EXCEPTION ===");
+        ex.printStackTrace();
+        System.err.println("==========================");
         ErrorResponse error = new ErrorResponse(
                 "INVALID_INPUT",
                 ex.getMessage(),
@@ -43,6 +47,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAuthorizationDenied(AuthorizationDeniedException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "UNAUTHORIZED",
+                "Access denied. Authentication required.",
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
     @ExceptionHandler(UnauthorizedOperationException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedOperationException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -52,6 +66,7 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
+
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handleDataAccess(DataAccessException ex) {

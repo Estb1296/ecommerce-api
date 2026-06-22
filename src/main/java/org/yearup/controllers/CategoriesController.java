@@ -22,11 +22,9 @@ import java.util.List;
 public class CategoriesController
 {
     private final CategoryService categoryService;
-    private final ProductService productService;
     @Autowired
-    public CategoriesController(CategoryService categoryService, ProductService productService) {
+    public CategoriesController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.productService = productService;
     }
 
 
@@ -52,11 +50,11 @@ public class CategoriesController
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
-    @GetMapping("{categoryId}/products")
+    @GetMapping("/{categoryId}/products")
     public ResponseEntity<List<Product>> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
-        List<Product> products = productService.getProductsByCategory(categoryId);
+        List<Product> products = categoryService.getProductsByCategory(categoryId);
         return ResponseEntity.ok(products);
     }
 

@@ -1,6 +1,7 @@
 package org.yearup.models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShoppingCart
@@ -10,11 +11,6 @@ public class ShoppingCart
     public Map<Integer, ShoppingCartItem> getItems()
     {
         return items;
-    }
-
-    public void setItems(Map<Integer, ShoppingCartItem> items)
-    {
-        this.items = items;
     }
 
     public boolean contains(int productId)
