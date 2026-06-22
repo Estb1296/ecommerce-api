@@ -50,21 +50,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthorizationDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAuthorizationDenied(AuthorizationDeniedException ex) {
         ErrorResponse error = new ErrorResponse(
-                "UNAUTHORIZED",
-                "Access denied. Authentication required.",
+                "FORBIDDEN",
+                "You do not have permission to access this resource.",
                 LocalDateTime.now()
         );
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
     @ExceptionHandler(UnauthorizedOperationException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedOperationException ex) {
         ErrorResponse error = new ErrorResponse(
-                "FORBIDDEN",
+                "UNAUTHORIZED",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
 

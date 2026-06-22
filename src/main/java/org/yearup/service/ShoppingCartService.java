@@ -104,10 +104,10 @@ public class ShoppingCartService
         }
 
         try {
-            // Update the quantity for just this specific row in the database
+            // 1. Update the quantity for just this specific row in the database
             shoppingCartRepository.updateQuantity(userId, productId, newQuantity);
 
-            //  Return the freshly updated cart structure
+            // 2. Return the freshly updated cart structure
             return getByUserId(userId);
         } catch (Exception e) {
             throw new DataAccessException("Failed to update item quantity", e);
@@ -147,17 +147,47 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
             throw new InvalidInputException("User ID must be a positive number");
         }
 
-        if (item == null || item.getProductId() <= 0) {
-            throw new InvalidInputException("Invalid item");
+        if (item == null) {
+            throw new InvalidInputException("Item cannot be null");
+        }
+
+        // ✅ Extract productId safely BEFORE calling getProductId()
+        int productId = item.getProduct() != null ? item.getProduct().getProductId() : 0;
+
+        if (productId <= 0) {
+            throw new InvalidInputException("Invalid product ID");
+        }
+
+        if (item.getQuantity() <= 0) {
+            throw new InvalidInputException("Quantity must be greater than 0");
         }
 
         try {
-            CartItem cartItem = new CartItem();
-            cartItem.setUserId(userId);
-            cartItem.setProductId(item.getProductId());
-            cartItem.setQuantity(item.getQuantity());
-            shoppingCartRepository.save(cartItem);
+            // ✅ Look up the complete Product
+            Product product = productService.getById(productId);
+            if (product == null) {
+                throw new ResourceNotFoundException("Product not found with id: " + productId);
+            }
+            item.setProduct(product);
+
+            // ✅ Check if item already exists in cart
+            CartItem existing = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+
+            if (existing != null) {
+                // ✅ Update existing quantity
+                existing.setQuantity(existing.getQuantity() + item.getQuantity());
+                shoppingCartRepository.save(existing);
+            } else {
+                // ✅ Create new item
+                CartItem cartItem = new CartItem();
+                cartItem.setUserId(userId);
+                cartItem.setProductId(productId);
+                cartItem.setQuantity(item.getQuantity());
+                shoppingCartRepository.save(cartItem);
+            }
+
             return getByUserId(userId);
+
         } catch (Exception e) {
             throw new DataAccessException("Failed to add to cart", e);
         }
