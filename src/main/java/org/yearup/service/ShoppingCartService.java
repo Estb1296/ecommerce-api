@@ -2,7 +2,7 @@ package org.yearup.service;
 
 import org.springframework.stereotype.Service;
 import org.yearup.exception.DataAccessException;
-import org.yearup.exception.DuplicateResourceException;
+
 import org.yearup.exception.InvalidInputException;
 import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.CartItem;
@@ -11,7 +11,7 @@ import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 import org.yearup.repository.ShoppingCartRepository;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -95,33 +95,22 @@ public class ShoppingCartService
         shoppingCartRepository.deleteByUserIdAndProductId(userId, productId);
     }
 
-    public ShoppingCart update(int userId, ShoppingCart shoppingCart) {
-        if (userId <= 0) {
-            throw new InvalidInputException("User ID must be a positive number");
+    public ShoppingCart updateItemQuantity(int userId, int productId, int newQuantity) {
+        if (userId <= 0 || productId <= 0) {
+            throw new InvalidInputException("IDs must be positive numbers");
         }
-
-        if (shoppingCart == null || shoppingCart.getItems().isEmpty()) {
-            throw new InvalidInputException("Cart items cannot be empty");
+        if (newQuantity <= 0) {
+            throw new InvalidInputException("Quantity must be greater than 0");
         }
 
         try {
-            // Delete old cart items
-            shoppingCartRepository.deleteByUserId(userId);
+            // Update the quantity for just this specific row in the database
+            shoppingCartRepository.updateQuantity(userId, productId, newQuantity);
 
-            // Save new items
-            for (ShoppingCartItem item : shoppingCart.getItems().values()) {
-                CartItem cartItem = new CartItem();
-                cartItem.setUserId(userId);
-                cartItem.setProductId(item.getProductId());
-                cartItem.setQuantity(item.getQuantity());
-                shoppingCartRepository.save(cartItem);
-            }
-
-            // Return updated cart
+            //  Return the freshly updated cart structure
             return getByUserId(userId);
-
         } catch (Exception e) {
-            throw new DataAccessException("Failed to update shopping cart", e);
+            throw new DataAccessException("Failed to update item quantity", e);
         }
     }
 
