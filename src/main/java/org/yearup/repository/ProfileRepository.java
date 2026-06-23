@@ -7,4 +7,6 @@ import org.yearup.models.Profile;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Integer>
 {
+    Profile findByUserId(int userId);
 }
+
