@@ -1,9 +1,12 @@
 package org.yearup.controllers;
 
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.yearup.exception.InvalidInputException;
+import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.CartItem;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
@@ -35,10 +38,7 @@ public class ShoppingCartController
     public ResponseEntity<ShoppingCart> getCart(Principal principal)
     {
         // get the currently logged-in username
-        String userName = principal.getName();
-        // find database user by username
-        User user = userService.getByUserName(userName);
-        int userId = user.getId();
+        int userId = getUserIdFromPrincipal(principal);
 
         // use the shoppingCartService to get all items in the cart and return the cart
         ShoppingCart cart = shoppingCartService.getByUserId(userId);
@@ -48,16 +48,28 @@ public class ShoppingCartController
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
+
     @PostMapping("/products/{productId}")
-    public ResponseEntity<ShoppingCart>addToCart(Principal principal,
-                                                 @RequestBody ShoppingCartItem item){
-        String userName = principal.getName();
-        User user = userService.getByUserName(userName);
-        int userId = user.getId();
-        ShoppingCart cart = shoppingCartService.addToCart(userId,item);
+    public ResponseEntity<ShoppingCart> addToCart(Principal principal,
+                                                  @PathVariable int productId,
+                                                  @RequestBody ShoppingCartItem item) {
+        // Get userId from principal
+        int userId = getUserIdFromPrincipal(principal);
+
+        // Pass all three parameters to service
+        ShoppingCart cart = shoppingCartService.addToCart(userId, productId, item);
         return ResponseEntity.status(HttpStatus.CREATED).body(cart);
     }
-
+    private int getUserIdFromPrincipal(Principal principal) {
+        if (principal==null){
+            throw new InvalidInputException("Authentication required");
+        }
+        User user = userService.getByUserName(principal.getName());
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return user.getId();
+    }
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
@@ -66,9 +78,8 @@ public class ShoppingCartController
     public ResponseEntity<ShoppingCart> updateCart(Principal principal,
                                                    @PathVariable int productId,
                                                    @RequestBody ShoppingCartItem item) {
-        String userName = principal.getName();
-        User user = userService.getByUserName(userName);
-        int userId = user.getId();
+
+        int userId = getUserIdFromPrincipal(principal);
 
         // Pass the item quantity from the RequestBody down to the service
         ShoppingCart updated = shoppingCartService.updateItemQuantity(userId, productId, item.getQuantity());
@@ -77,26 +88,24 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
+
     @DeleteMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> clearCart(Principal principal)
+    public ResponseEntity<ShoppingCart> clearCart(Principal principal)
     {
-        String userName = principal.getName();
-        User user = userService.getByUserName(userName);
-        int userId = user.getId();
+
+        int userId = getUserIdFromPrincipal(principal);
 
         shoppingCartService.clearCart(userId);
-        shoppingCartService.clearCart(userId);
-        return ResponseEntity.noContent().build();
+        ShoppingCart emptyCart = shoppingCartService.getByUserId(userId);
+        return ResponseEntity.ok(emptyCart);
     }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<ShoppingCart> deleteProductFromCart(@PathVariable int productId, Principal principal)
     {
         // 1. Unified User Parsing
-        String userName = principal.getName();
-        User user = userService.getByUserName(userName);
-        int userId = user.getId();
+
+        int userId = getUserIdFromPrincipal(principal);
 
         // 2. Clear clean service execution
         shoppingCartService.deleteProductFromCart(userId, productId);

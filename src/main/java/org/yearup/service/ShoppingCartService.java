@@ -1,5 +1,6 @@
 package org.yearup.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.yearup.exception.DataAccessException;
 
@@ -68,6 +69,7 @@ public class ShoppingCartService
         return foundItem;
 
     }
+    @Transactional
     public void clearCart(int userId) {
         if (userId <= 0) {
             throw new InvalidInputException("User ID must be a positive number");
@@ -142,39 +144,32 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
     }
 }
     // Add a single item to cart (instead of replacing whole cart)
-    public ShoppingCart addToCart(int userId, ShoppingCartItem item) {
+    public ShoppingCart addToCart(int userId, int productId, ShoppingCartItem item) {
         if (userId <= 0) {
             throw new InvalidInputException("User ID must be a positive number");
         }
 
-        if (item == null) {
-            throw new InvalidInputException("Item cannot be null");
-        }
-
-        // ✅ Extract productId safely BEFORE calling getProductId()
-        int productId = item.getProduct() != null ? item.getProduct().getProductId() : 0;
-
         if (productId <= 0) {
-            throw new InvalidInputException("Invalid product ID");
+            throw new InvalidInputException("Product ID must be a positive number");
         }
 
-        if (item.getQuantity() <= 0) {
+        if (item == null || item.getQuantity() <= 0) {
             throw new InvalidInputException("Quantity must be greater than 0");
         }
 
-        try {
-            // ✅ Look up the complete Product
+
+            // ✅ Use productId from path parameter
             Product product = productService.getById(productId);
             if (product == null) {
                 throw new ResourceNotFoundException("Product not found with id: " + productId);
             }
-            item.setProduct(product);
 
+        try {
             // ✅ Check if item already exists in cart
             CartItem existing = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
             if (existing != null) {
-                // ✅ Update existing quantity
+                // ✅ Update existing quantity (smart: adds to existing)
                 existing.setQuantity(existing.getQuantity() + item.getQuantity());
                 shoppingCartRepository.save(existing);
             } else {
