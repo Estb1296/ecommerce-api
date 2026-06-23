@@ -35,7 +35,7 @@ public class UserService
     public int getIdByUsername(String username)
     {
         User user = userRepository.findByUsername(username);
-        return user != null ? user.getId() : -1;
+        return user != null ? user.getId() :  -1;
     }
 
     public boolean exists(String username)

@@ -6,10 +6,7 @@ import org.yearup.exception.DataAccessException;
 
 import org.yearup.exception.InvalidInputException;
 import org.yearup.exception.ResourceNotFoundException;
-import org.yearup.models.CartItem;
-import org.yearup.models.Product;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
+import org.yearup.models.*;
 import org.yearup.repository.ShoppingCartRepository;
 
 
@@ -144,19 +141,11 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
     }
 }
     // Add a single item to cart (instead of replacing whole cart)
-    public ShoppingCart addToCart(int userId, int productId, ShoppingCartItem item) {
-        if (userId <= 0) {
-            throw new InvalidInputException("User ID must be a positive number");
-        }
+    public ShoppingCart addToCart(int userId, int productId) {
 
         if (productId <= 0) {
             throw new InvalidInputException("Product ID must be a positive number");
         }
-
-        if (item == null || item.getQuantity() <= 0) {
-            throw new InvalidInputException("Quantity must be greater than 0");
-        }
-
 
             // ✅ Use productId from path parameter
             Product product = productService.getById(productId);
@@ -170,14 +159,14 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
 
             if (existing != null) {
                 // ✅ Update existing quantity (smart: adds to existing)
-                existing.setQuantity(existing.getQuantity() + item.getQuantity());
+                existing.setQuantity(existing.getQuantity() + 1);
                 shoppingCartRepository.save(existing);
             } else {
                 // ✅ Create new item
                 CartItem cartItem = new CartItem();
                 cartItem.setUserId(userId);
                 cartItem.setProductId(productId);
-                cartItem.setQuantity(item.getQuantity());
+                cartItem.setQuantity(1);
                 shoppingCartRepository.save(cartItem);
             }
 

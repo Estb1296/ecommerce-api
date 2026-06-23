@@ -1,6 +1,5 @@
 package org.yearup.controllers;
 
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +14,7 @@ import org.yearup.service.ShoppingCartService;
 import org.yearup.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.Optional;
 
 // convert this class to a REST controller
 // only logged-in users should have access to these actions
@@ -32,9 +31,20 @@ public class ShoppingCartController
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
     }
+    private int getUserIdFromPrincipal(Principal principal) {
+        if (principal==null){
+            throw new InvalidInputException("Authentication required");
+        }
+        User user = userService.getByUserName(principal.getName());
+        if (user==null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return user.getId();
+    }
 
     // each method in this controller requires a Principal object as a parameter
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> getCart(Principal principal)
     {
         // get the currently logged-in username
@@ -50,31 +60,23 @@ public class ShoppingCartController
     // return the updated cart with status 201 Created
 
     @PostMapping("/products/{productId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> addToCart(Principal principal,
-                                                  @PathVariable int productId,
-                                                  @RequestBody ShoppingCartItem item) {
+                                                  @PathVariable int productId) {
         // Get userId from principal
         int userId = getUserIdFromPrincipal(principal);
 
         // Pass all three parameters to service
-        ShoppingCart cart = shoppingCartService.addToCart(userId, productId, item);
+        ShoppingCart cart = shoppingCartService.addToCart(userId, productId);
         return ResponseEntity.status(HttpStatus.CREATED).body(cart);
     }
-    private int getUserIdFromPrincipal(Principal principal) {
-        if (principal==null){
-            throw new InvalidInputException("Authentication required");
-        }
-        User user = userService.getByUserName(principal.getName());
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found");
-        }
-        return user.getId();
-    }
+
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
     @PutMapping("/products/{productId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> updateCart(Principal principal,
                                                    @PathVariable int productId,
                                                    @RequestBody ShoppingCartItem item) {
@@ -90,6 +92,7 @@ public class ShoppingCartController
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
 
     @DeleteMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> clearCart(Principal principal)
     {
 
@@ -101,6 +104,7 @@ public class ShoppingCartController
     }
 
     @DeleteMapping("/products/{productId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> deleteProductFromCart(@PathVariable int productId, Principal principal)
     {
         // 1. Unified User Parsing

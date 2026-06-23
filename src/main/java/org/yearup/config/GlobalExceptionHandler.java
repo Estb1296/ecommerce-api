@@ -47,27 +47,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleAuthorizationDenied(AuthorizationDeniedException ex) {
-        ErrorResponse error = new ErrorResponse(
-                "FORBIDDEN",
-                "You do not have permission to access this resource.",
-                LocalDateTime.now()
-        );
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-    }
-
-    @ExceptionHandler(UnauthorizedOperationException.class)
-    public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedOperationException ex) {
-        ErrorResponse error = new ErrorResponse(
-                "UNAUTHORIZED",
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
-    }
-
-
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handleDataAccess(DataAccessException ex) {
         ErrorResponse error = new ErrorResponse(
@@ -78,14 +57,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
-    // Catch-all for unexpected exceptions
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
-        ErrorResponse error = new ErrorResponse(
-                "INTERNAL_ERROR",
-                "An unexpected error occurred",
-                LocalDateTime.now()
-        );
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
 }
