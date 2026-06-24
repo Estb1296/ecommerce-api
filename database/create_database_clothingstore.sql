@@ -46,7 +46,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     product_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    salesPrice DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
     subcategory VARCHAR(20),
@@ -115,7 +115,7 @@ VALUES  ('Tops', 'T-shirts, hoodies, sweaters, jackets, and other upper body clo
 
 /* INSERT Products */
 -- Tops (Category 1)
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('ButterGoods Classic Logo Hoodie', 89.99, 1, 'Australian streetwear brand with quality construction.', 'buttergoods-hoodie.jpg', 25, 1, 'Black'),
         ('Champion Powerblend Hoodie', 54.99, 1, 'Classic athletic hoodie with C logo.', 'champion-hoodie.jpg', 40, 1, 'Gray'),
         ('Plain White T-Shirt', 19.99, 1, 'Basic cotton crew neck t-shirt.', 'white-tshirt.jpg', 100, 1, 'White'),
@@ -138,7 +138,7 @@ VALUES  ('ButterGoods Classic Logo Hoodie', 89.99, 1, 'Australian streetwear bra
         ('Jean Jacket', 74.99, 1, 'Classic denim jacket for women.', 'womens-jean-jacket.jpg', 30, 0, 'Blue');
 
 -- Bottoms (Category 2)
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('Blue Jeans', 69.99, 2, 'Classic straight-fit denim jeans.', 'blue-jeans.jpg', 50, 1, 'Blue'),
         ('Black Jeans', 69.99, 2, 'Modern black denim jeans.', 'black-jeans.jpg', 45, 1, 'Black'),
         ('High-Waisted Jeans', 74.99, 2, 'Modern high-rise skinny jeans.', 'high-waist-jeans.jpg', 45, 1, 'Blue'),
@@ -161,7 +161,7 @@ VALUES  ('Blue Jeans', 69.99, 2, 'Classic straight-fit denim jeans.', 'blue-jean
         ('Bermuda Shorts', 39.99, 2, 'Knee-length casual shorts.', 'bermuda-shorts.jpg', 45, 0, 'Tan');
 
 -- Shoes (Category 3)
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('Adidas Campus Sneakers', 89.99, 3, 'Retro suede sneakers with three stripes branding.', 'adidas-campus.jpg', 35, 1, 'Green'),
         ('Reebok Classic Leather', 79.99, 3, 'Iconic white leather sneakers with classic styling.', 'reebok-classic.jpg', 40, 1, 'White'),
         ('White Canvas Sneakers', 49.99, 3, 'Basic canvas lace-up sneakers.', 'white-canvas-shoes.jpg', 60, 1, 'White'),
@@ -184,7 +184,7 @@ VALUES  ('Adidas Campus Sneakers', 89.99, 3, 'Retro suede sneakers with three st
         ('Combat Boots', 109.99, 3, 'Military-style lace-up boots.', 'combat-boots.jpg', 20, 0, 'Black');
 
 -- sample duplicates
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('ButterGoods Classic Logo Hoodie', 94.99, 1, 'Limited edition ButterGoods hoodie with premium construction.', 'buttergoods-hoodie.jpg', 15, 0, 'Gray'),
         ('Champion Powerblend Hoodie', 59.99, 1, 'Champion hoodie in different colorway.', 'champion-hoodie.jpg', 25, 0, 'Navy'),
         ('Adidas Campus Sneakers', 94.99, 3, 'Retro suede sneakers in navy colorway.', 'adidas-campus.jpg', 25, 0, 'Navy');

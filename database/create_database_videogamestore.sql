@@ -46,7 +46,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     product_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    salesPrice DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
     subcategory VARCHAR(20),
@@ -115,7 +115,7 @@ VALUES  ('Console Games', 'Latest games for PlayStation, Xbox, and Nintendo plat
 
 /* INSERT Products */
 -- Console Games
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('The Legend of Zelda: Breath of the Wild', 59.99, 1, 'Open-world adventure game for Nintendo Switch.', 'zelda-botw.jpg', 50, 1, 'Adventure'),
         ('God of War', 49.99, 1, 'Epic Norse mythology action-adventure for PlayStation.', 'god-of-war.jpg', 40, 1, 'Action'),
         ('Halo Infinite', 59.99, 1, 'Master Chief returns in this sci-fi shooter for Xbox.', 'halo-infinite.jpg', 35, 0, 'Shooter'),
@@ -138,7 +138,7 @@ VALUES  ('The Legend of Zelda: Breath of the Wild', 59.99, 1, 'Open-world advent
         ('Starfield', 69.99, 1, 'Bethesda''s epic space exploration RPG.', 'starfield.jpg', 30, 1, 'RPG');
 
 -- PC Games
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('Cyberpunk 2077', 29.99, 2, 'Futuristic open-world RPG in Night City.', 'cyberpunk-2077.jpg', 100, 0, 'RPG'),
         ('The Witcher 3: Wild Hunt', 19.99, 2, 'Epic fantasy RPG with hundreds of hours of content.', 'witcher-3.jpg', 150, 1, 'RPG'),
         ('Counter-Strike 2', 0.00, 2, 'Free-to-play competitive tactical shooter.', 'counter-strike-2.jpg', 999, 1, 'Shooter'),
@@ -160,7 +160,7 @@ VALUES  ('Cyberpunk 2077', 29.99, 2, 'Futuristic open-world RPG in Night City.',
         ('Fall Guys', 0.00, 2, 'Colorful battle royale party game.', 'fall-guys.jpg', 999, 0, 'Action');
 
 -- Gaming Accessories
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
 VALUES  ('Xbox Wireless Controller', 59.99, 3, 'Official wireless controller for Xbox Series X|S.', 'xbox-controller.jpg', 50, 1, 'Controller'),
         ('PlayStation 5 DualSense Controller', 69.99, 3, 'Advanced controller with haptic feedback.', 'ps5-controller.jpg', 40, 1, 'Controller'),
         ('Nintendo Pro Controller', 69.99, 3, 'Professional controller for Nintendo Switch.', 'switch-pro-controller.jpg', 30, 0, 'Controller'),
@@ -183,7 +183,7 @@ VALUES  ('Xbox Wireless Controller', 59.99, 3, 'Official wireless controller for
         ('VR Headset Stand', 24.99, 3, 'Display stand for VR headsets and controllers.', 'vr-stand.jpg', 40, 0, 'Accessory');
 
 
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Xbox Wireless Controller', 64.99, 3, 'Official Xbox wireless controller with enhanced grip.', 'xbox-controller.jpg', 50, 0, 'Controller'),
         ('Xbox Wireless Controller', 64.99, 3, 'Premium Xbox controller for competitive gaming.', 'xbox-controller.jpg', 50, 0, 'Controller'),
         ('Gaming Mousepad XL', 19.99, 3, 'Professional XL mousepad for gaming.', 'xl-mousepad.jpg', 100, 1, 'Peripheral');
