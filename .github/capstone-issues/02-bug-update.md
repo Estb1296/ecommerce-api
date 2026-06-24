@@ -7,7 +7,7 @@ labels: bug, required
 
 Admins report that when they edit a product, some changes don't stick. For example, updating
 a product's **stock** returns `OK` but the value in the database never actually changes
-(other fields such as price and description update correctly).
+(other fields such as salesPrice and description update correctly).
 
 ### Tasks
 - [ ] Reproduce by editing a product's stock via `PUT /products/{id}` and re-reading it

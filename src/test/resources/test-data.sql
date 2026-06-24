@@ -31,7 +31,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
                           product_id INT NOT NULL AUTO_INCREMENT,
                           name VARCHAR(100) NOT NULL,
-                          price DECIMAL(10, 2) NOT NULL,
+                          salesPrice DECIMAL(10, 2) NOT NULL,
                           category_id INT NOT NULL,
                           description TEXT,
                           subcategory VARCHAR(20),
@@ -98,7 +98,7 @@ VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.'),
 
 /* INSERT Products */
 -- electronics
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Smartphone', 499.99, 1, 'A powerful and feature-rich smartphone for all your communication needs.', 'smartphone.jpg', 50, 0, 'Black'),
         ('Laptop', 899.99, 1, 'A high-performance laptop for work and entertainment.', 'laptop.jpg', 30, 0, 'Gray'),
         ('Headphones', 99.99, 1, 'Immerse yourself in music with these high-quality headphones.', 'headphones.jpg', 100, 1, 'White'),

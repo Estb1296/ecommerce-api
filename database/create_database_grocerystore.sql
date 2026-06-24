@@ -46,7 +46,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     product_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    salesPrice DECIMAL(10, 2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
     subcategory VARCHAR(20),
@@ -115,7 +115,7 @@ VALUES  ('Fresh Produce', 'Fresh fruits, vegetables, and organic produce.'),
 
 /* INSERT Products */
 -- Fresh Produce
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Organic Bananas', 3.99, 1, 'Fresh organic bananas, perfect for snacking or smoothies.', 'bananas.jpg', 100, 1, 'Organic'),
         ('Gala Apples', 4.99, 1, 'Crisp and sweet Gala apples, great for lunch boxes.', 'gala-apples.jpg', 80, 1, 'Fresh'),
         ('Fresh Spinach', 2.99, 1, 'Organic baby spinach leaves, perfect for salads.', 'spinach.jpg', 60, 0, 'Organic'),
@@ -138,7 +138,7 @@ VALUES  ('Organic Bananas', 3.99, 1, 'Fresh organic bananas, perfect for snackin
         ('Nitro Cold Brew', 6.99, 1, 'Nitro brewed cold coffee', 'cold-brew.jpg', 55, 1, 'Local');
 
 -- Dairy & Eggs
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES 
         ('Large Grade A Eggs', 3.99, 2, 'Fresh large eggs from free-range chickens.', 'large-eggs.jpg', 80, 0, 'Fresh'),
         ('Sharp Cheddar Cheese', 5.99, 2, 'Aged sharp cheddar cheese, perfect for sandwiches.', 'cheddar-cheese.jpg', 40, 0, 'Fresh'),
@@ -161,7 +161,7 @@ VALUES
         ('Baklava', 5.99, 2, 'Flaky honey goodness', 'baklava.jpg', 35, 1, 'Local');
 
 -- Pantry Staples
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Jasmine Rice 5lb', 6.99, 3, 'Fragrant jasmine rice, perfect for Asian dishes.', 'jasmine-rice.jpg', 40, 1, 'Whole Grain'),
         ('Extra Virgin Olive Oil', 12.99, 3, 'Premium cold-pressed extra virgin olive oil.', 'olive-oil.jpg', 30, 1, 'Organic'),
         ('Moutarde', 83.49, 3, 'Moutarde faite à la perfection', 'moutarde.jpg', 25, 0, 'Imported'),
@@ -185,7 +185,7 @@ VALUES  ('Jasmine Rice 5lb', 6.99, 3, 'Fragrant jasmine rice, perfect for Asian 
         ('Maple Syrup', 12.99, 3, 'Pure Grade A maple syrup from Vermont.', 'maple-syrup.jpg', 25, 1, 'Natural');
 
 -- sample duplicates
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Jasmine Rice 5lb', 7.49, 3, 'Premium fragrant jasmine rice for Asian cooking.', 'jasmine-rice.jpg', 40, 0, 'Organic'),
         ('Jasmine Rice 5lb', 7.49, 3, 'Long-grain jasmine rice with authentic flavor.', 'jasmine-rice.jpg', 40, 0, 'Whole Grain'),
         ('Maple Syrup', 12.99, 3, 'Authentic Vermont maple syrup.', 'maple-syrup.jpg', 25, 1, 'Local');

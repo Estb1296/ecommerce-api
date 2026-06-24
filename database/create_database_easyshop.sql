@@ -46,7 +46,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     product_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    salesPrice DECIMAL(10, 2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
     subcategory VARCHAR(20),
@@ -115,7 +115,7 @@ VALUES  ('Electronics', 'Explore the latest gadgets and electronic devices.'),
 
 /* INSERT Products */
 -- electronics
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Smartphone', 499.99, 1, 'A powerful and feature-rich smartphone for all your communication needs.', 'smartphone.jpg', 50, 0, 'Black'),
         ('Laptop', 899.99, 1, 'A high-performance laptop for work and entertainment.', 'laptop.jpg', 30, 0, 'Gray'),
         ('Headphones', 99.99, 1, 'Immerse yourself in music with these high-quality headphones.', 'headphones.jpg', 100, 1, 'White'),
@@ -137,7 +137,7 @@ VALUES  ('Smartphone', 499.99, 1, 'A powerful and feature-rich smartphone for al
         ('Smart Home Hub', 179.99, 1, 'Control your smart devices and create a connected home with this intelligent home hub.', 'smart-home-hub.jpg', 10, 0, 'White'),
         ('Portable Charger', 39.99, 1, 'Keep your devices powered up on the go with this compact and reliable portable charger.', 'portable-charger.jpg', 50, 0, 'Black');
 -- mens clothes
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Men''s T-Shirt', 29.99, 2, 'A comfortable and stylish t-shirt for everyday wear.', 'mens-tshirt.jpg', 50, 1, 'Charcoal'),
         ('Men''s Jeans', 59.99, 2, 'Classic denim jeans for a timeless and casual look.', 'mens-jeans.jpg', 30, 0, 'Blue'),
         ('Men''s Dress Shirt', 49.99, 2, 'A sophisticated dress shirt for formal occasions.', 'mens-dress-shirt.jpg', 40, 0, 'White'),
@@ -159,7 +159,7 @@ VALUES  ('Men''s T-Shirt', 29.99, 2, 'A comfortable and stylish t-shirt for ever
         ('Men''s Dress Pants', 49.99, 2, 'A pair of tailored dress pants for a polished and professional look.', 'mens-dress-pants.jpg', 20, 0, 'Khaki'),
         ('Men''s Casual Shirt', 39.99, 2, 'A versatile and comfortable shirt for a laid-back style.', 'mens-casual-shirt.jpg', 30, 1, 'Gray');
 -- womens clothes
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Women''s Dress', 79.99, 2, 'A beautiful and elegant dress for special occasions.', 'womens-dress.jpg', 50, 0, 'Mint'),
         ('Women''s Jeans', 69.99, 2, 'Comfortable and stylish jeans for a fashionable look.', 'womens-jeans.jpg', 30, 1, 'Blue'),
         ('Women''s Blouse', 49.99, 2, 'A versatile and chic blouse for everyday wear.', 'womens-blouse.jpg', 40, 0, 'Lavender'),
@@ -178,7 +178,7 @@ VALUES  ('Women''s Dress', 79.99, 2, 'A beautiful and elegant dress for special 
         ('Women''s Scarf', 24.99, 2, 'A versatile and cozy scarf to add a pop of subcategory to your outfit.', 'womens-scarf.jpg', 50, 0, 'Maroon'),
         ('Women''s Formal Gown', 199.99, 2, 'A stunning and glamorous gown for formal events.', 'womens-gown.jpg', 30, 1, 'Burgundy');
 -- home & kitchen
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Cookware Set', 149.99, 3, 'A comprehensive set of high-quality cookware for all your culinary needs.', 'cookware-set.jpg', 50, 1, 'Red'),
         ('Coffee Maker', 79.99, 3, 'Brew your favorite coffee with this efficient and stylish coffee maker.', 'coffee-maker.jpg', 30, 0, 'Black'),
         ('Kitchen Knife Set', 59.99, 3, 'A set of sharp and durable knives for effortless food preparation.', 'knife-set.jpg', 40, 1, 'Silver'),
@@ -211,7 +211,7 @@ VALUES  ('Cookware Set', 149.99, 3, 'A comprehensive set of high-quality cookwar
         ('Measuring Cup Set', 14.99, 3, 'Accurately measure ingredients with this set of handy and stackable measuring cups.', 'measuring-cups.jpg', 50, 1, 'Green');
 
 -- sample duplicates from "bug"
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Laptop', 999.99, 1, 'A high-performance laptop for work and entertainment.', 'laptop.jpg', 30, 0, 'Gray'),
         ('Laptop', 999.99, 1, 'A high-performance gaming laptop.', 'laptop.jpg', 30, 0, 'Gray'),
         ('Tea Kettle', 29.99, 3, 'Brew a perfect cup of tea with this classic tea kettle.', 'tea-kettle.jpg', 50, 1, 'White');

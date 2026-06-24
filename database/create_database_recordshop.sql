@@ -46,7 +46,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     product_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    salesPrice DECIMAL(10, 2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
     subcategory VARCHAR(20),
@@ -115,7 +115,7 @@ VALUES  ('Vinyl Records', 'Discover classic and modern albums on vinyl format.')
 
 /* INSERT Products */
 -- Vinyl Records
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('The Beatles - Abbey Road Vinyl', 29.99, 1, 'Classic Beatles album remastered on 180-gram vinyl.', 'abbey-road-vinyl.jpg', 50, 1, 'Rock'),
         ('Pink Floyd - Atom Heart Mother Vinyl', 36.99, 1, 'Experimental progressive rock with orchestral arrangements.', 'atom-heart-mother-vinyl.jpg', 25, 1, 'Rock'),
         ('Led Zeppelin IV Vinyl', 32.99, 1, 'Rock masterpiece featuring Stairway to Heaven.', 'led-zeppelin-iv-vinyl.jpg', 25, 0, 'Rock'),
@@ -139,7 +139,7 @@ VALUES  ('The Beatles - Abbey Road Vinyl', 29.99, 1, 'Classic Beatles album rema
         ('King Gizzard - Flight b741 Vinyl', 32.99, 1, 'Australian psych rock experimental album on vinyl.', 'king-gizzard-flight-vinyl.jpg', 25, 0, 'Rock');
 
 -- CDs
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('The Beatles - White Album CD', 15.99, 2, 'Double CD remaster of the iconic White Album.', 'white-album-cd.jpg', 60, 0, 'Rock'),
         ('Miles Davis - Kind of Blue CD', 16.99, 2, 'Essential jazz masterpiece and legendary recording.', 'kind-of-blue-cd.jpg', 45, 1, 'Jazz'),
         ('AC/DC - Back in Black CD', 14.99, 2, 'Hard rock classic remastered.', 'back-in-black-cd.jpg', 50, 0, 'Rock'),
@@ -161,7 +161,7 @@ VALUES  ('The Beatles - White Album CD', 15.99, 2, 'Double CD remaster of the ic
         ('Blink-182 - Enema of the State CD', 12.99, 2, 'Pop punk album that defined late 90s.', 'enema-state-cd.jpg', 45, 0, 'Pop');
 
 -- Music Accessories
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory) 
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Audio-Technica AT-LP120XUSB Turntable', 349.99, 3, 'Professional direct drive turntable with USB output.', 'turntable.jpg', 15, 1, 'Silver'),
         ('Sony MDR-7506 Headphones', 99.99, 3, 'Professional studio monitor headphones.', 'headphones.jpg', 40, 1, 'Black'),
         ('Vinyl Record Storage Crate', 29.99, 3, 'Wooden crate holds up to 100 LP records.', 'record-crate.jpg', 50, 0, 'Brown'),
@@ -184,7 +184,7 @@ VALUES  ('Audio-Technica AT-LP120XUSB Turntable', 349.99, 3, 'Professional direc
         ('Music Stand', 39.99, 3, 'Adjustable music stand for sheet music and tablets.', 'music-stand.jpg', 25, 0, 'Black');
 
 -- sample duplicates
-INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Audio-Technica AT-LP120XUSB Turntable', 379.99, 3, 'Professional direct drive turntable with USB and analog output.', 'turntable.jpg', 15, 0, 'Silver'),
         ('Audio-Technica AT-LP120XUSB Turntable', 379.99, 3, 'High-end turntable for professional DJs.', 'turntable.jpg', 15, 0, 'Silver'),
         ('Vinyl Record Storage Crate', 29.99, 3, 'Classic wooden crate for LP storage.', 'record-crate.jpg', 50, 1, 'Brown');
