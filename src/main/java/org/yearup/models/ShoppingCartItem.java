@@ -4,52 +4,40 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ShoppingCartItem
 {
-    private Product product = null;
+    private int productId;
+    private String productName;
+    private double price;
     private int quantity = 1;
     private double discountPercent = 0;
 
-    public Product getProduct()
-    {
-        return product;
-    }
+    public ShoppingCartItem() {}
 
-    public void setProduct(Product product)
-    {
-        this.product = product;
-    }
-
-    public int getQuantity()
-    {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity)
-    {
+    public ShoppingCartItem(int productId, String productName, double price, int quantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
         this.quantity = quantity;
     }
 
-    public double getDiscountPercent()
-    {
-        return discountPercent;
-    }
+    // Getters & Setters
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
-    public void setDiscountPercent(double discountPercent)
-    {
-        this.discountPercent = discountPercent;
-    }
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
 
-    @JsonIgnore
-    public int getProductId()
-    {
-        return this.product.getProductId();
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public double getLineTotal()
-    {
-        double basePrice = product.getPrice();
-        double subTotal = basePrice * this.quantity;
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public double getDiscountPercent() { return discountPercent; }
+    public void setDiscountPercent(double discountPercent) { this.discountPercent = discountPercent; }
+
+    public double getLineTotal() {
+        double subTotal = this.price * this.quantity;
         double discountAmount = subTotal * discountPercent;
-
         return subTotal - discountAmount;
     }
 }

@@ -37,18 +37,19 @@ public class ShoppingCartService
             Product product = productService.getById(cartItem.getProductId());
 
             if (product != null) {
-                ShoppingCartItem item = new ShoppingCartItem();
-                item.setProduct(product);
-                item.setQuantity(cartItem.getQuantity());
-
-                shoppingCart.add(item);  // Adds to the Map<productId, ShoppingCartItem>
+                ShoppingCartItem item = new ShoppingCartItem(
+                        product.getProductId(),
+                        product.getName(),
+                        product.getPrice(),
+                        cartItem.getQuantity()
+                );
+                shoppingCart.add(item);// Adds to the Map<productId, ShoppingCartItem>
             }
         }
 
         return shoppingCart;
     }
 
-    // add additional methods here
     public CartItem getProductFromCart(int userId,int productId){
         if (userId <= 0) {
             throw new InvalidInputException("User ID must be a positive number");

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "order_line_items")
 public class OrderItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_line_item_id")
@@ -54,8 +53,12 @@ public class OrderItem {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public double getSalesPrice() { return salesPrice; }
-    public void setSalesPrice(double salesPrice) { this.salesPrice = salesPrice; }
+    public double getSalesPrice() {
+        return salesPrice;
+    }
+    public void setSalesPrice(double salesPrice) {
+        this.salesPrice = salesPrice;
+    }
 
     public double getDiscountPercent() { return discount; }
     public void setDiscountPercent(double discountPercent) { this.discount = discountPercent; }

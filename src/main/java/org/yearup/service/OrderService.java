@@ -53,21 +53,26 @@ public class OrderService {
             order.setZip(profile.getZip());
 
             // 3. Save the Order (auto-generates orderId)
+
             Order savedOrder = orderRepository.save(order);
 
             // 4. Create OrderItems from each ShoppingCartItem
             for (ShoppingCartItem cartItem : cart.getItems().values()) {
-                OrderItem orderItem = new OrderItem(savedOrder.getOrderId(), cartItem.getProductId(),
-                        cartItem.getQuantity());
-
+                OrderItem orderItem = new OrderItem(
+                        savedOrder.getOrderId(),
+                        cartItem.getProductId(),
+                        cartItem.getQuantity(),
+                        cartItem.getPrice(),           // ✅ Get price from ShoppingCartItem
+                        cartItem.getDiscountPercent()
+                );
                 orderItemRepository.save(orderItem);
             }
-
             // 5. Clear the shopping cart
             shoppingCartService.clearCart(userId);
 
             // 6. Return the created Order
             return savedOrder;
+
 
         } catch (InvalidInputException e) {
             throw e;
