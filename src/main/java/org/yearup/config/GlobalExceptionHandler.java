@@ -2,7 +2,7 @@ package org.yearup.config;
 
 
 
-import org.springframework.security.authorization.AuthorizationDeniedException;
+
 import org.yearup.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

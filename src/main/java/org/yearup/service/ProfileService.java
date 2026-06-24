@@ -32,14 +32,6 @@ public class ProfileService
             throw new InvalidInputException("Profile data cannot be null");
         }
 
-        //Validate essential business fields (e.g., First Name, Last Name)
-        if (profile.getFirstName() == null || profile.getFirstName().isBlank()) {
-            throw new InvalidInputException("First name is required");
-        }
-        if (profile.getLastName() == null || profile.getLastName().isBlank()) {
-            throw new InvalidInputException("Last name is required");
-        }
-
         try {
             //Persist safely
             return profileRepository.save(profile);
@@ -57,21 +49,6 @@ public class ProfileService
             throw new InvalidInputException("Profile data cannot be null");
 
         }
-        //Validate essential business fields (e.g., First Name, Last Name)
-
-        if (profile.getFirstName() == null || profile.getFirstName().isBlank()) {
-
-            throw new InvalidInputException("First name is required");
-
-        }
-
-        if (profile.getLastName() == null || profile.getLastName().isBlank()) {
-
-            throw new InvalidInputException("Last name is required");
-
-        }
-
-
 
         try {
 

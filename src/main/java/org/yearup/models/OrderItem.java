@@ -35,6 +35,12 @@ public class OrderItem {
         this.discount = discount;
     }
 
+    public OrderItem(int orderId, int productId, int quantity) {
+        this.orderId=orderId;
+        this.productId = productId;
+        this.quantity=quantity;
+    }
+
     // Getters & Setters
     public int getOrderLineItemId() { return orderLineItemId; }
     public void setOrderLineItemId(int orderLineItemId) { this.orderLineItemId = orderLineItemId; }

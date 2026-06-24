@@ -42,6 +42,11 @@ private double shippingAmount;
         this.shippingAmount = shippingAmount;
     }
 
+    public Order(int userId, LocalDate date) {
+        this.userId = userId;
+        this.date=date;
+    }
+
     public int getOrderId() {
         return orderId;
     }
