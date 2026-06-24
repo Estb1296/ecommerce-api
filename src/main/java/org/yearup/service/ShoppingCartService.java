@@ -37,9 +37,12 @@ public class ShoppingCartService
             Product product = productService.getById(cartItem.getProductId());
 
             if (product != null) {
-                ShoppingCartItem item = new ShoppingCartItem();
-                item.setProduct(product);
-                item.setQuantity(cartItem.getQuantity());
+                ShoppingCartItem item = new ShoppingCartItem(
+                        product.getProductId(),           //  Extract productId
+                        product.getName(),                //  Extract name
+                        product.getPrice(),               //  CAPTURE PRICE HERE
+                        cartItem.getQuantity()            //  Quantity from database
+                );
 
                 shoppingCart.add(item);  // Adds to the Map<productId, ShoppingCartItem>
             }

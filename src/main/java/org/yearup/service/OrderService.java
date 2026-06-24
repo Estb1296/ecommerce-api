@@ -57,12 +57,15 @@ public class OrderService {
 
             // 4. Create OrderItems from each ShoppingCartItem
             for (ShoppingCartItem cartItem : cart.getItems().values()) {
-                OrderItem orderItem = new OrderItem(savedOrder.getOrderId(), cartItem.getProductId(),
-                        cartItem.getQuantity());
-
+                OrderItem orderItem = new OrderItem(
+                        savedOrder.getOrderId(),
+                        cartItem.getProductId(),
+                        cartItem.getQuantity(),
+                        cartItem.getPrice(),           // ✅ Get price from ShoppingCartItem
+                        cartItem.getDiscountPercent()
+                );
                 orderItemRepository.save(orderItem);
             }
-
             // 5. Clear the shopping cart
             shoppingCartService.clearCart(userId);
 

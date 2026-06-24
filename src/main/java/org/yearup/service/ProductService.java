@@ -13,12 +13,11 @@ import java.util.List;
 public class ProductService
 {
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository,CategoryRepository categoryRepository)
+
+    public ProductService(ProductRepository productRepository)
     {
         this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
     }
 
     public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory)
@@ -52,12 +51,6 @@ public class ProductService
         }
 
         // Verify category exists
-
-        if (!categoryRepository.existsById(categoryId)) {
-            throw new ResourceNotFoundException(
-                    "Category not found with id: " + categoryId
-            );
-        }
 
         List<Product> products = productRepository.findByCategoryId(categoryId);
 
