@@ -16,9 +16,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<ErrorResponse> handleInvalidInput(InvalidInputException ex) {
-        System.err.println("=== UNEXPECTED EXCEPTION ===");
-        ex.printStackTrace();
-        System.err.println("==========================");
         ErrorResponse error = new ErrorResponse(
                 "INVALID_INPUT",
                 ex.getMessage(),

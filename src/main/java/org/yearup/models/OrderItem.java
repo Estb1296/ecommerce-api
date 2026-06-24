@@ -2,7 +2,7 @@ package org.yearup.models;
 
 import jakarta.persistence.*;
 @Entity
-@Table(name = "order_details")
+@Table(name = "order_line_items")
 public class OrderItem {
 
     @Id

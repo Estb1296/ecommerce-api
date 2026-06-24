@@ -23,7 +23,7 @@ private String city;
 @Column(name = "state")
 private String state;
 @Column(name = "zip")
-private Long zipCode;
+private String zip;
 @Column(name = "shipping_amount")
 private double shippingAmount;
 
@@ -31,14 +31,14 @@ private double shippingAmount;
     }
 
     public Order(int orderId, int userId, LocalDate date, String address, String city,
-                 String state, Long zipCode, double shippingAmount) {
+                 String state, String zip, double shippingAmount) {
         this.orderId = orderId;
         this.userId = userId;
         this.date = date;
         this.address = address;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zip = zip;
         this.shippingAmount = shippingAmount;
     }
 
@@ -95,12 +95,12 @@ private double shippingAmount;
         this.state = state;
     }
 
-    public Long getZipCode() {
-        return zipCode;
+    public String getZip() {
+        return zip;
     }
 
-    public void setZipCode(Long zipCode) {
-        this.zipCode = zipCode;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public double getShippingAmount() {

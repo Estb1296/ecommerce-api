@@ -3,9 +3,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.yearup.exception.DataAccessException;
 import org.yearup.exception.InvalidInputException;
+import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.*;
 import org.yearup.repository.OrderRepository;
 import org.yearup.repository.OrderItemRepository;
+import org.yearup.repository.ProfileRepository;
 
 import java.time.LocalDate;
 
@@ -15,13 +17,15 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ShoppingCartService shoppingCartService;
+    private final ProfileRepository profileRepository;
 
     public OrderService(OrderRepository orderRepository,
                         OrderItemRepository orderItemRepository,
-                        ShoppingCartService shoppingCartService) {
+                        ShoppingCartService shoppingCartService, ProfileRepository profileRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.shoppingCartService = shoppingCartService;
+        this.profileRepository = profileRepository;
     }
 
     @Transactional
@@ -38,9 +42,15 @@ public class OrderService {
             if (cart.getItems().isEmpty()) {
                 throw new InvalidInputException("Cannot checkout with an empty cart");
             }
+            Profile profile = profileRepository.findById(userId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Profile not found for user: " + userId));
 
             // 2. Create the Order entity
             Order order = new Order(userId, LocalDate.now());
+            order.setAddress(profile.getAddress());
+            order.setCity(profile.getCity());
+            order.setState(profile.getState());
+            order.setZip(profile.getZip());
 
             // 3. Save the Order (auto-generates orderId)
             Order savedOrder = orderRepository.save(order);
