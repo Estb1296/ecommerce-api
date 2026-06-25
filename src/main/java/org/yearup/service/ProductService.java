@@ -1,6 +1,7 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
+import org.yearup.DTO.ProductSearchDto;
 import org.yearup.exception.InvalidInputException;
 import org.yearup.exception.ResourceNotFoundException;
 import org.yearup.models.Product;
@@ -89,4 +90,8 @@ public class ProductService
     {
         productRepository.deleteById(productId);
     }
+    public List<ProductSearchDto> searchWithDto(Integer categoryId, Double minPrice, Double maxPrice, String subCategory) {
+        return productRepository.searchWithDto(categoryId, minPrice, maxPrice, subCategory);
+    }
+
 }

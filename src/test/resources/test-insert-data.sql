@@ -15,7 +15,7 @@ VALUES  ('Electronics',   'Explore the latest gadgets and electronic devices.'),
         ('Home & Kitchen','Find everything you need to decorate and equip your home.');
 
 /* INSERT Products */
-INSERT INTO products (name, salesPrice, category_id, description, image_url, stock, featured, subcategory)
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
 VALUES  ('Smartphone',       499.99, 1, 'A powerful and feature-rich smartphone for all your communication needs.', 'smartphone.jpg',     50, 0, 'Black'),
         ('Laptop',           899.99, 1, 'A high-performance laptop for work and entertainment.',                    'laptop.jpg',         30, 0, 'Gray'),
         ('Headphones',        99.99, 1, 'Immerse yourself in music with these high-quality headphones.',            'headphones.jpg',    100, 1, 'White'),
