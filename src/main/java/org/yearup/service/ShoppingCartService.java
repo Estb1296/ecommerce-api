@@ -43,7 +43,8 @@ public class ShoppingCartService
                         product.getPrice(),
                         cartItem.getQuantity()
                 );
-                shoppingCart.add(item);// Adds to the Map<productId, ShoppingCartItem>
+                // Adds to the Map<productId, ShoppingCartItem>
+                shoppingCart.add(item);
             }
         }
 
