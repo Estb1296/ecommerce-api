@@ -20,7 +20,7 @@ public class ShoppingCart
 
     public void add(ShoppingCartItem item)
     {
-        items.put(item.getProductId(), item);
+        items.put(item.getProduct().getProductId(), item);
     }
 
     public ShoppingCartItem get(int productId)

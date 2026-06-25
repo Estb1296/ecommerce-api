@@ -60,9 +60,9 @@ public class OrderService {
             for (ShoppingCartItem cartItem : cart.getItems().values()) {
                 OrderItem orderItem = new OrderItem(
                         savedOrder.getOrderId(),
-                        cartItem.getProductId(),
+                        cartItem.getProduct().getProductId(),
                         cartItem.getQuantity(),
-                        cartItem.getPrice(),           // ✅ Get price from ShoppingCartItem
+                        cartItem.getProduct().getPrice(),           // ✅ Get price from ShoppingCartItem
                         cartItem.getDiscountPercent()
                 );
                 orderItemRepository.save(orderItem);

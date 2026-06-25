@@ -35,14 +35,10 @@ public class ShoppingCartService
         ShoppingCart shoppingCart = new ShoppingCart();
         for (CartItem cartItem : cartItems) {
             Product product = productService.getById(cartItem.getProductId());
-
             if (product != null) {
-                ShoppingCartItem item = new ShoppingCartItem(
-                        product.getProductId(),
-                        product.getName(),
-                        product.getPrice(),
-                        cartItem.getQuantity()
-                );
+                ShoppingCartItem item = new ShoppingCartItem();
+                item.setProduct(product);
+                item.setQuantity(cartItem.getQuantity());
                 // Adds to the Map<productId, ShoppingCartItem>
                 shoppingCart.add(item);
             }
@@ -129,7 +125,7 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
         for (ShoppingCartItem item : shoppingCart.getItems().values()) {
             CartItem cartItem = new CartItem();
             cartItem.setUserId(userId);
-            cartItem.setProductId(item.getProductId());
+            cartItem.setProductId(item.getProduct().getProductId());
             cartItem.setQuantity(item.getQuantity());
 
             shoppingCartRepository.save(cartItem);
