@@ -1,17 +1,18 @@
 package org.yearup.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class ShoppingCartItem
 {
     private int productId;
     private String productName;
     private double price;
     private int quantity = 1;
-    private double discountPercent = 0;
+    private double discount = 0;
 
-    public ShoppingCartItem(int productId, String name, double price, int quantity) {
-
+    public ShoppingCartItem(int productId, String productName, double price, int quantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public int getProductId() { return productId; }
@@ -26,12 +27,12 @@ public class ShoppingCartItem
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public double getDiscountPercent() { return discountPercent; }
-    public void setDiscountPercent(double discountPercent) { this.discountPercent = discountPercent; }
+    public double getDiscount() { return discount; }
+    public void setDiscount(double discount) { this.discount = discount; }
 
     public double getLineTotal() {
         double subTotal = this.price * this.quantity;
-        double discountAmount = subTotal * discountPercent;
+        double discountAmount = subTotal * discount;
         return subTotal - discountAmount;
     }
 }

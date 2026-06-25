@@ -61,9 +61,10 @@ public class OrderService {
                         savedOrder.getOrderId(),
                         cartItem.getProductId(),
                         cartItem.getQuantity(),
-                        cartItem.getPrice(),           // ✅ Get price from ShoppingCartItem
-                        cartItem.getDiscountPercent()
+                        cartItem.getPrice(),
+                        cartItem.getDiscount()
                 );
+
                 orderItemRepository.save(orderItem);
             }
             // 5. Clear the shopping cart

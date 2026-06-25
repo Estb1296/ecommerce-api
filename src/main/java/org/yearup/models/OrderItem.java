@@ -1,6 +1,8 @@
 package org.yearup.models;
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @Entity
 @Table(name = "order_line_items")
 public class OrderItem {
