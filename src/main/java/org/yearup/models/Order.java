@@ -3,6 +3,7 @@ package org.yearup.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -15,7 +16,7 @@ private int orderId;
 @Column(name = "user_id")
 private int userId;
 @Column(name = "date")
-private LocalDate date;
+private LocalDateTime date;
 @Column(name = "address")
 private String address;
 @Column(name = "city")
@@ -30,7 +31,7 @@ private double shippingAmount;
     public Order() {
     }
 
-    public Order(int orderId, int userId, LocalDate date, String address, String city,
+    public Order(int orderId, int userId, LocalDateTime date, String address, String city,
                  String state, String zip, double shippingAmount) {
         this.orderId = orderId;
         this.userId = userId;
@@ -42,7 +43,7 @@ private double shippingAmount;
         this.shippingAmount = shippingAmount;
     }
 
-    public Order(int userId, LocalDate date) {
+    public Order(int userId, LocalDateTime date) {
         this.userId = userId;
         this.date=date;
     }
@@ -63,11 +64,11 @@ private double shippingAmount;
         this.userId = userId;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

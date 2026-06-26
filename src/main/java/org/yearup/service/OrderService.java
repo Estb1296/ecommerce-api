@@ -9,7 +9,8 @@ import org.yearup.repository.OrderRepository;
 import org.yearup.repository.OrderItemRepository;
 import org.yearup.repository.ProfileRepository;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 @Service
 public class OrderService {
@@ -46,7 +47,7 @@ public class OrderService {
                     .orElseThrow(() -> new ResourceNotFoundException("Profile not found for user: " + userId));
 
             // 2. Create the Order entity
-            Order order = new Order(userId, LocalDate.now());
+            Order order = new Order(userId, LocalDateTime.now());
             order.setAddress(profile.getAddress());
             order.setCity(profile.getCity());
             order.setState(profile.getState());

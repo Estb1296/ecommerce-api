@@ -101,10 +101,10 @@ public class ShoppingCartService
         }
 
         try {
-            // 1. Update the quantity for just this specific row in the database
+            // Update the quantity for just this specific row in the database
             shoppingCartRepository.updateQuantity(userId, productId, newQuantity);
 
-            // 2. Return the freshly updated cart structure
+            // Return the freshly updated cart structure
             return getByUserId(userId);
         } catch (Exception e) {
             throw new DataAccessException("Failed to update item quantity", e);
@@ -145,22 +145,22 @@ public ShoppingCart create(int userId, ShoppingCart shoppingCart) {
             throw new InvalidInputException("Product ID must be a positive number");
         }
 
-            // ✅ Use productId from path parameter
+            //  Use productId from path parameter
             Product product = productService.getById(productId);
             if (product == null) {
                 throw new ResourceNotFoundException("Product not found with id: " + productId);
             }
 
         try {
-            // ✅ Check if item already exists in cart
+            //  Check if item already exists in cart
             CartItem existing = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
             if (existing != null) {
-                // ✅ Update existing quantity (smart: adds to existing)
+                //  Update existing quantity (smart: adds to existing)
                 existing.setQuantity(existing.getQuantity() + 1);
                 shoppingCartRepository.save(existing);
             } else {
-                // ✅ Create new item
+                //  Create new item
                 CartItem cartItem = new CartItem();
                 cartItem.setUserId(userId);
                 cartItem.setProductId(productId);
