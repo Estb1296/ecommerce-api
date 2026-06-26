@@ -62,7 +62,7 @@ public class OrderService {
                         savedOrder.getOrderId(),
                         cartItem.getProduct().getProductId(),
                         cartItem.getQuantity(),
-                        cartItem.getProduct().getPrice(),           // ✅ Get price from ShoppingCartItem
+                        cartItem.getProduct().getPrice(),           //  Get price from ShoppingCartItem
                         cartItem.getDiscountPercent()
                 );
                 orderItemRepository.save(orderItem);
