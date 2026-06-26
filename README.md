@@ -196,7 +196,7 @@ POST http://localhost:8080/orders
 ## Featured Code Snippets
 ### Rebuilding In-Memory Cart from Persistent Storage
 
-```java
+```bash
 public ShoppingCart getByUserId(int userId) {
     if (userId <= 0) {
         throw new InvalidInputException("User ID must be a positive number");
@@ -223,7 +223,7 @@ public ShoppingCart getByUserId(int userId) {
 
 This demonstrates capturing product data at purchase time, completely decoupled from the Product entity:
 
-```java
+```bash
 for (ShoppingCartItem cartItem : cart.getItems().values()) {
     OrderItem orderItem = new OrderItem(
             savedOrder.getOrderId(),
